@@ -128,12 +128,6 @@ extension CGPoint {
     }
 }
 
-extension SIMD3 where Scalar == Float {
-    func distance(to other: SIMD3<Float>) -> Float {
-        return sqrt(pow(self.x - other.x, 2) + pow(self.y - other.y, 2) + pow(self.z - other.z, 2))
-    }
-}
-
 struct Location {
     var coordinate: Coordinate
     var altitude: Distance
