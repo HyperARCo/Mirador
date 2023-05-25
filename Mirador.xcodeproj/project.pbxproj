@@ -15,7 +15,9 @@
 		49B96DB92A1AB06000AF303A /* MiradorViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 49B96DB82A1AB06000AF303A /* MiradorViewModel.swift */; };
 		49B96DBB2A1AB09A00AF303A /* Entities.swift in Sources */ = {isa = PBXBuildFile; fileRef = 49B96DBA2A1AB09A00AF303A /* Entities.swift */; };
 		49B96DBD2A1AB10D00AF303A /* LocationAnchor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 49B96DBC2A1AB10D00AF303A /* LocationAnchor.swift */; };
+		49B96DBF2A1AB17500AF303A /* RKExtensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 49B96DBE2A1AB17500AF303A /* RKExtensions.swift */; };
 		49B96DC12A1AC54000AF303A /* LocationAnchor+JSON.swift in Sources */ = {isa = PBXBuildFile; fileRef = 49B96DC02A1AC54000AF303A /* LocationAnchor+JSON.swift */; };
+		49B96DC32A1AC7B800AF303A /* MiradorView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 49B96DC22A1AC7B800AF303A /* MiradorView.swift */; };
 		49B96DC52A1ACA3F00AF303A /* UIImage+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 49B96DC42A1ACA3F00AF303A /* UIImage+Extensions.swift */; };
 		49B96DC72A1B59DF00AF303A /* LocationEntity.swift in Sources */ = {isa = PBXBuildFile; fileRef = 49B96DC62A1B59DF00AF303A /* LocationEntity.swift */; };
 /* End PBXBuildFile section */
@@ -30,7 +32,9 @@
 		49B96DB82A1AB06000AF303A /* MiradorViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MiradorViewModel.swift; sourceTree = "<group>"; };
 		49B96DBA2A1AB09A00AF303A /* Entities.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Entities.swift; sourceTree = "<group>"; };
 		49B96DBC2A1AB10D00AF303A /* LocationAnchor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LocationAnchor.swift; sourceTree = "<group>"; };
+		49B96DBE2A1AB17500AF303A /* RKExtensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RKExtensions.swift; sourceTree = "<group>"; };
 		49B96DC02A1AC54000AF303A /* LocationAnchor+JSON.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "LocationAnchor+JSON.swift"; sourceTree = "<group>"; };
+		49B96DC22A1AC7B800AF303A /* MiradorView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MiradorView.swift; sourceTree = "<group>"; };
 		49B96DC42A1ACA3F00AF303A /* UIImage+Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIImage+Extensions.swift"; sourceTree = "<group>"; };
 		49B96DC62A1B59DF00AF303A /* LocationEntity.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LocationEntity.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -88,10 +92,12 @@
 				49B96DB62A1A981D00AF303A /* Location.swift */,
 				49B96DBC2A1AB10D00AF303A /* LocationAnchor.swift */,
 				49B96DC02A1AC54000AF303A /* LocationAnchor+JSON.swift */,
+				49B96DBE2A1AB17500AF303A /* RKExtensions.swift */,
 				49B96DBA2A1AB09A00AF303A /* Entities.swift */,
 				49B96DC62A1B59DF00AF303A /* LocationEntity.swift */,
 				49B96DC42A1ACA3F00AF303A /* UIImage+Extensions.swift */,
 				49B96DB82A1AB06000AF303A /* MiradorViewModel.swift */,
+				49B96DC22A1AC7B800AF303A /* MiradorView.swift */,
 			);
 			path = Mirador;
 			sourceTree = "<group>";
@@ -166,11 +172,13 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				49B96DC32A1AC7B800AF303A /* MiradorView.swift in Sources */,
 				49B96DBB2A1AB09A00AF303A /* Entities.swift in Sources */,
 				49B96DBD2A1AB10D00AF303A /* LocationAnchor.swift in Sources */,
 				49B96DAA2A1A339900AF303A /* ContentView.swift in Sources */,
 				49B96DB92A1AB06000AF303A /* MiradorViewModel.swift in Sources */,
 				49B96DC12A1AC54000AF303A /* LocationAnchor+JSON.swift in Sources */,
+				49B96DBF2A1AB17500AF303A /* RKExtensions.swift in Sources */,
 				49B96DC52A1ACA3F00AF303A /* UIImage+Extensions.swift in Sources */,
 				49B96DB72A1A981D00AF303A /* Location.swift in Sources */,
 				49B96DA82A1A339900AF303A /* MiradorApp.swift in Sources */,
