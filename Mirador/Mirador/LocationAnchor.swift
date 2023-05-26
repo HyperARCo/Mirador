@@ -17,17 +17,24 @@ class PointOfInterest {
     }
 }
 
+enum AnchorOrientation: String, Codable {
+    case horizontal = "horizontal"
+    case vertical = "vertical"
+}
+
 class LocationAnchor {
     let name: String
     let physicalWidth: Double
     let location: Location
     let bearing: Float
     var pointsOfInterest = [PointOfInterest]()
+    let orientation: AnchorOrientation
     
-    init(name: String, physicalWidth: Double, location: Location, bearing: Float) {
+    init(name: String, physicalWidth: Double, location: Location, bearing: Float, orientation: AnchorOrientation) {
         self.name = name
         self.physicalWidth = physicalWidth
         self.location = location
         self.bearing = bearing
+        self.orientation = orientation
     }
 }

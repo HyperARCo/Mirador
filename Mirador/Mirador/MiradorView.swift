@@ -254,11 +254,7 @@ extension MiradorView: ARSessionDelegate {
                 if let locationAnchorEntity = model.locationAnchorEntities.first(where: {$0.referenceImageName == referenceImageName}) {
                     anchorEntity.addChild(locationAnchorEntity)
                     
-                    locationAnchorEntity.setOrientation(
-                        simd_quatf(
-                            angle: imageAnchor.transform.eulerAngles.y + locationAnchorEntity.locationAnchor.bearing,
-                            axis: [0,1,0]),
-                        relativeTo: nil)
+                    updateOrientation(imageAnchor: imageAnchor, anchorEntity: anchorEntity, locationAnchorEntity: locationAnchorEntity)
                 }
             }
         }
@@ -269,16 +265,24 @@ extension MiradorView: ARSessionDelegate {
             if let imageAnchor = anchor as? ARImageAnchor {
                 if let anchorEntity = model.imageAnchorEntities[imageAnchor],
                    let locationAnchorEntity = anchorEntity.children.first(where: {$0 is LocationAnchorEntity}) as? LocationAnchorEntity {
-                    
-                    anchorEntity.setTransformMatrix(imageAnchor.transform, relativeTo: nil)
-                    
-                    locationAnchorEntity.setOrientation(
-                        simd_quatf(
-                            angle: imageAnchor.transform.eulerAngles.y + locationAnchorEntity.locationAnchor.bearing,
-                            axis: [0,1,0]),
-                        relativeTo: nil)
+                    updateOrientation(imageAnchor: imageAnchor, anchorEntity: anchorEntity, locationAnchorEntity: locationAnchorEntity)
                 }
             }
+        }
+    }
+    
+    func updateOrientation(imageAnchor: ARImageAnchor, anchorEntity: AnchorEntity, locationAnchorEntity: LocationAnchorEntity) {
+        anchorEntity.setTransformMatrix(imageAnchor.transform, relativeTo: nil)
+        
+        if locationAnchorEntity.locationAnchor.orientation == .horizontal {
+            let angle = imageAnchor.transform.eulerAngles.y + locationAnchorEntity.locationAnchor.bearing
+            locationAnchorEntity.setOrientation(simd_quatf(angle: angle, axis: [0,1,0]), relativeTo: nil)
+        } else {
+            let rotationMatrix = simd_float4x4(SCNMatrix4MakeRotation(Float(-90).degreesToRadians, 1, 0, 0))
+            let transform = imageAnchor.transform * rotationMatrix
+            
+            let angle = transform.eulerAngles.y + locationAnchorEntity.locationAnchor.bearing
+            locationAnchorEntity.setOrientation(simd_quatf(angle: angle, axis: [0,1,0]), relativeTo: nil)
         }
     }
 }

@@ -13,6 +13,7 @@ struct AnchorData: Codable {
     let coordinate: [Double]
     let altitude: Double
     let bearing_degrees: Float
+    let orientation: AnchorOrientation
 }
 
 struct PointOfInterestData: Codable {
@@ -35,7 +36,7 @@ extension LocationAnchor {
             
             let anchorCoordinate = Coordinate(latitude: geoJSONData.anchor.coordinate[1], longitude: geoJSONData.anchor.coordinate[0])
             let anchorLocation = Location(coordinate: anchorCoordinate, altitude: geoJSONData.anchor.altitude)
-            let anchor = LocationAnchor(name: geoJSONData.anchor.name, physicalWidth: geoJSONData.anchor.physical_width, location: anchorLocation, bearing: geoJSONData.anchor.bearing_degrees.degreesToRadians)
+            let anchor = LocationAnchor(name: geoJSONData.anchor.name, physicalWidth: geoJSONData.anchor.physical_width, location: anchorLocation, bearing: geoJSONData.anchor.bearing_degrees.degreesToRadians, orientation: geoJSONData.anchor.orientation)
             
             for poiData in geoJSONData.points_of_interest {
                 let poiCoordinate = Coordinate(latitude: poiData.coordinate[1], longitude: poiData.coordinate[0])
