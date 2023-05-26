@@ -274,16 +274,28 @@ extension MiradorView: ARSessionDelegate {
     func updateOrientation(imageAnchor: ARImageAnchor, anchorEntity: AnchorEntity, locationAnchorEntity: LocationAnchorEntity) {
         anchorEntity.setTransformMatrix(imageAnchor.transform, relativeTo: nil)
         
+        let angle: Float
+        
         if locationAnchorEntity.locationAnchor.orientation == .horizontal {
-            let angle = imageAnchor.transform.eulerAngles.y + locationAnchorEntity.locationAnchor.bearing
+            angle = imageAnchor.transform.eulerAngles.y + locationAnchorEntity.locationAnchor.bearing
             locationAnchorEntity.setOrientation(simd_quatf(angle: angle, axis: [0,1,0]), relativeTo: nil)
         } else {
             let rotationMatrix = simd_float4x4(SCNMatrix4MakeRotation(Float(-90).degreesToRadians, 1, 0, 0))
             let transform = imageAnchor.transform * rotationMatrix
             
-            let angle = transform.eulerAngles.y + locationAnchorEntity.locationAnchor.bearing
-            locationAnchorEntity.setOrientation(simd_quatf(angle: angle, axis: [0,1,0]), relativeTo: nil)
+            angle = transform.eulerAngles.y + locationAnchorEntity.locationAnchor.bearing
         }
+        
+        if let kalmanFilter = locationAnchorEntity.kalmanFilter {
+            kalmanFilter.update(measurement: angle, measurementUncertainty: Float(1).degreesToRadians)
+        } else {
+            let kalmanFilter = KalmanFilter(initialEstimate: angle, initialUncertainty:  Float(1).degreesToRadians)
+            locationAnchorEntity.kalmanFilter = kalmanFilter
+        }
+        
+        guard let angleEstimate = locationAnchorEntity.kalmanFilter?.getEstimate() else { return }
+       
+        locationAnchorEntity.setOrientation(simd_quatf(angle: angleEstimate, axis: [0,1,0]), relativeTo: nil)
     }
 }
 

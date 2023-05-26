@@ -25,6 +25,7 @@ class LocationEntity: Entity {
 class LocationAnchorEntity: Entity {
     let locationAnchor: LocationAnchor
     var referenceImageName: String?
+    var kalmanFilter: KalmanFilter?
     
     init(locationAnchor: LocationAnchor, referenceImageName: String? = nil) {
         self.locationAnchor = locationAnchor
