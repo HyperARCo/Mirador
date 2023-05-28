@@ -1,0 +1,42 @@
+{
+    "anchor": {
+        "name": "greenwich",
+        "physical_width": 0.11,
+        "coordinate": [-0.000845886554903711, 51.47787836559849],
+        "altitude": 46.0,
+        "bearing_degrees": -30,
+        "orientation": "horizontal"
+    },
+    "points_of_interest": [
+        {
+            "name": "Canary Wharf",
+            "coordinate": [-0.01948017651652569, 51.50493780015471],
+            "altitude": 235
+        },
+        {
+            "name": "O2 Arena",
+            "coordinate": [0.0032185001953396555, 51.502961124558865],
+            "altitude": 52
+        },
+        {
+            "name": "Maritime Museum",
+            "coordinate": [-0.005230101011211116, 51.480932557674954],
+            "altitude": 30
+        },
+        {
+            "name": "Queen's House",
+            "coordinate": [-0.0037343528030337296, 51.48115337472038],
+            "altitude": 20
+        },
+        {
+            "name": "City of London",
+            "coordinate": [-0.08024839576419235, 51.51438463724218],
+            "altitude": 200
+        },
+        {
+            "name": "Prime Meridian",
+            "coordinate": [-0.0011600531494121876, 51.477768555967856],
+            "altitude": 52.0
+        }
+    ]
+}

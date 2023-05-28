@@ -10,6 +10,14 @@ import SwiftUI
 struct ContentView: View {
     var body: some View {
         ZStack {
+            let filePath = Bundle.main.path(forResource: "greenwich", ofType: ".json")!
+
+            if let anchor = LocationAnchor.anchorFromFile(atPath: filePath) {
+                let model = MiradorViewModel(locationAnchor: anchor)
+                
+                MiradorViewContainer(model: model)
+                    .edgesIgnoringSafeArea(.all)
+            }
         }
     }
 }

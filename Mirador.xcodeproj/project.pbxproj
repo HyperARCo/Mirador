@@ -20,6 +20,7 @@
 		49B96DC32A1AC7B800AF303A /* MiradorView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 49B96DC22A1AC7B800AF303A /* MiradorView.swift */; };
 		49B96DC52A1ACA3F00AF303A /* UIImage+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 49B96DC42A1ACA3F00AF303A /* UIImage+Extensions.swift */; };
 		49B96DC72A1B59DF00AF303A /* LocationEntity.swift in Sources */ = {isa = PBXBuildFile; fileRef = 49B96DC62A1B59DF00AF303A /* LocationEntity.swift */; };
+		49FFC9AF2A1C2CFB006AD4E1 /* greenwich.json in Resources */ = {isa = PBXBuildFile; fileRef = 49FFC9AE2A1C2CFB006AD4E1 /* greenwich.json */; };
 		49FFC9B42A215ACE006AD4E1 /* KalmanFilter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 49FFC9B32A215ACE006AD4E1 /* KalmanFilter.swift */; };
 /* End PBXBuildFile section */
 
@@ -38,6 +39,7 @@
 		49B96DC22A1AC7B800AF303A /* MiradorView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MiradorView.swift; sourceTree = "<group>"; };
 		49B96DC42A1ACA3F00AF303A /* UIImage+Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIImage+Extensions.swift"; sourceTree = "<group>"; };
 		49B96DC62A1B59DF00AF303A /* LocationEntity.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LocationEntity.swift; sourceTree = "<group>"; };
+		49FFC9AE2A1C2CFB006AD4E1 /* greenwich.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = greenwich.json; sourceTree = "<group>"; };
 		49FFC9B32A215ACE006AD4E1 /* KalmanFilter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KalmanFilter.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -75,6 +77,7 @@
 				49B96DA72A1A339900AF303A /* MiradorApp.swift */,
 				49B96DA92A1A339900AF303A /* ContentView.swift */,
 				49B96DAB2A1A339A00AF303A /* Assets.xcassets */,
+				49FFC9AE2A1C2CFB006AD4E1 /* greenwich.json */,
 				49B96DAD2A1A339A00AF303A /* Preview Content */,
 			);
 			path = Demo;
@@ -165,6 +168,7 @@
 			files = (
 				49B96DAF2A1A339A00AF303A /* Preview Assets.xcassets in Resources */,
 				49B96DAC2A1A339A00AF303A /* Assets.xcassets in Resources */,
+				49FFC9AF2A1C2CFB006AD4E1 /* greenwich.json in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
