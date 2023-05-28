@@ -55,7 +55,8 @@
 		49B96D9B2A1A339900AF303A = {
 			isa = PBXGroup;
 			children = (
-				49B96DA62A1A339900AF303A /* Mirador */,
+				49FFC9BC2A23AB6F006AD4E1 /* Sources */,
+				49B96DA62A1A339900AF303A /* Demo */,
 				49B96DA52A1A339900AF303A /* Products */,
 			);
 			sourceTree = "<group>";
@@ -68,16 +69,15 @@
 			name = Products;
 			sourceTree = "<group>";
 		};
-		49B96DA62A1A339900AF303A /* Mirador */ = {
+		49B96DA62A1A339900AF303A /* Demo */ = {
 			isa = PBXGroup;
 			children = (
-				49FFC9B02A1C2D12006AD4E1 /* Mirador */,
 				49B96DA72A1A339900AF303A /* MiradorApp.swift */,
 				49B96DA92A1A339900AF303A /* ContentView.swift */,
 				49B96DAB2A1A339A00AF303A /* Assets.xcassets */,
 				49B96DAD2A1A339A00AF303A /* Preview Content */,
 			);
-			path = Mirador;
+			path = Demo;
 			sourceTree = "<group>";
 		};
 		49B96DAD2A1A339A00AF303A /* Preview Content */ = {
@@ -88,7 +88,7 @@
 			path = "Preview Content";
 			sourceTree = "<group>";
 		};
-		49FFC9B02A1C2D12006AD4E1 /* Mirador */ = {
+		49FFC9BC2A23AB6F006AD4E1 /* Sources */ = {
 			isa = PBXGroup;
 			children = (
 				49B96DB62A1A981D00AF303A /* Location.swift */,
@@ -102,7 +102,7 @@
 				49B96DB82A1AB06000AF303A /* MiradorViewModel.swift */,
 				49B96DC22A1AC7B800AF303A /* MiradorView.swift */,
 			);
-			path = Mirador;
+			path = Sources;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */

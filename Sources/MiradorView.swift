@@ -299,7 +299,6 @@ extension MiradorView: ARSessionDelegate {
     }
 }
 
-
 struct MiradorViewContainer: UIViewRepresentable {
     var model: MiradorViewModel
     
