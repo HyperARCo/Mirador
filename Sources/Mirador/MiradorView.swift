@@ -296,15 +296,15 @@ extension MiradorView: ARSessionDelegate {
 
 public struct MiradorViewContainer: UIViewRepresentable {
     var locationAnchor: LocationAnchor
+    public let miradorView: MiradorView
     
     public init(locationAnchor: LocationAnchor) {
         self.locationAnchor = locationAnchor
+        miradorView = MiradorView(locationAnchor: self.locationAnchor)
     }
     
     public func makeUIView(context: Context) -> MiradorView {
-        let arView = MiradorView(locationAnchor: self.locationAnchor)
-
-        return arView
+        return miradorView
     }
 
     public func updateUIView(_ uiView: MiradorView, context: Context) {}
