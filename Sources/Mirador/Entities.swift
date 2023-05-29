@@ -8,16 +8,16 @@
 import Foundation
 import RealityKit
 
-protocol HasScreenScale : Entity {
+public protocol HasScreenScale : Entity {
 }
 
-class ScreenScaleEntity : Entity, HasScreenScale {
+public class ScreenScaleEntity : Entity, HasScreenScale {
     
 }
 
-protocol HasFaceCamera: Entity {
+public protocol HasFaceCamera: Entity {
 }
 
-class FaceCameraEntity: Entity, HasFaceCamera {
+public class FaceCameraEntity: Entity, HasFaceCamera {
     
 }

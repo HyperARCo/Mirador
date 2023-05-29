@@ -19,7 +19,7 @@ extension Distance {
     static let earthRadius = 6371e3
 }
 
-extension FloatingPoint {
+public extension FloatingPoint {
     var degreesToRadians: Self { return self * .pi / 180 }
     var radiansToDegrees: Self { return self * 180 / .pi }
     
@@ -128,10 +128,15 @@ extension CGPoint {
     }
 }
 
-struct Location {
+public struct Location {
     var coordinate: Coordinate
     var altitude: Distance
     
-    static let zero = Location(coordinate: Coordinate.zero, altitude: 0)
+    public static let zero = Location(coordinate: Coordinate.zero, altitude: 0)
+    
+    public init(coordinate: Coordinate, altitude: Distance) {
+        self.coordinate = coordinate
+        self.altitude = altitude
+    }
 }
 

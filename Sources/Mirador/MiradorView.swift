@@ -10,13 +10,13 @@ import SwiftUI
 import RealityKit
 import ARKit
 
-class MiradorView: UIView {
+public class MiradorView: UIView {
     let model: MiradorViewModel
     
     let arView = ARView()
     
-    init(model: MiradorViewModel) {
-        self.model = model
+    public init(locationAnchor: LocationAnchor) {
+        self.model = MiradorViewModel(locationAnchor: locationAnchor)
         
         super.init(frame: .zero)
         
@@ -233,43 +233,6 @@ class MiradorView: UIView {
         locationEntity.addChild(faceCameraEntity)
         anchorEntity.addChild(locationEntity)
     }
-}
-
-extension MiradorView: ARSessionDelegate {
-    func session(_ session: ARSession, cameraDidChangeTrackingState camera: ARCamera) {
-        
-    }
-    
-    func session(_ session: ARSession, didAdd anchors: [ARAnchor]) {
-        for anchor in anchors {
-            if let imageAnchor = anchor as? ARImageAnchor {
-                let anchorEntity = AnchorEntity(world: imageAnchor.transform)
-                
-                model.imageAnchorEntities[imageAnchor] = anchorEntity
-                
-                arView.scene.addAnchor(anchorEntity)
-                
-                let referenceImageName = imageAnchor.referenceImage.name
-                
-                if let locationAnchorEntity = model.locationAnchorEntities.first(where: {$0.referenceImageName == referenceImageName}) {
-                    anchorEntity.addChild(locationAnchorEntity)
-                    
-                    updateOrientation(imageAnchor: imageAnchor, anchorEntity: anchorEntity, locationAnchorEntity: locationAnchorEntity)
-                }
-            }
-        }
-    }
-    
-    func session(_ session: ARSession, didUpdate anchors: [ARAnchor]) {
-        for anchor in anchors {
-            if let imageAnchor = anchor as? ARImageAnchor {
-                if let anchorEntity = model.imageAnchorEntities[imageAnchor],
-                   let locationAnchorEntity = anchorEntity.children.first(where: {$0 is LocationAnchorEntity}) as? LocationAnchorEntity {
-                    updateOrientation(imageAnchor: imageAnchor, anchorEntity: anchorEntity, locationAnchorEntity: locationAnchorEntity)
-                }
-            }
-        }
-    }
     
     func updateOrientation(imageAnchor: ARImageAnchor, anchorEntity: AnchorEntity, locationAnchorEntity: LocationAnchorEntity) {
         anchorEntity.setTransformMatrix(imageAnchor.transform, relativeTo: nil)
@@ -299,18 +262,55 @@ extension MiradorView: ARSessionDelegate {
     }
 }
 
-struct MiradorViewContainer: UIViewRepresentable {
-    var model: MiradorViewModel
-    
-    init(model: MiradorViewModel) {
-        self.model = model
+extension MiradorView: ARSessionDelegate {
+    public func session(_ session: ARSession, cameraDidChangeTrackingState camera: ARCamera) {
+        
     }
     
-    func makeUIView(context: Context) -> MiradorView {
-        let arView = MiradorView(model: model)
+    public func session(_ session: ARSession, didAdd anchors: [ARAnchor]) {
+        for anchor in anchors {
+            if let imageAnchor = anchor as? ARImageAnchor {
+                let anchorEntity = AnchorEntity(world: imageAnchor.transform)
+                
+                model.imageAnchorEntities[imageAnchor] = anchorEntity
+                
+                arView.scene.addAnchor(anchorEntity)
+                
+                let referenceImageName = imageAnchor.referenceImage.name
+                
+                if let locationAnchorEntity = model.locationAnchorEntities.first(where: {$0.referenceImageName == referenceImageName}) {
+                    anchorEntity.addChild(locationAnchorEntity)
+                    
+                    updateOrientation(imageAnchor: imageAnchor, anchorEntity: anchorEntity, locationAnchorEntity: locationAnchorEntity)
+                }
+            }
+        }
+    }
+    
+    public func session(_ session: ARSession, didUpdate anchors: [ARAnchor]) {
+        for anchor in anchors {
+            if let imageAnchor = anchor as? ARImageAnchor {
+                if let anchorEntity = model.imageAnchorEntities[imageAnchor],
+                   let locationAnchorEntity = anchorEntity.children.first(where: {$0 is LocationAnchorEntity}) as? LocationAnchorEntity {
+                    updateOrientation(imageAnchor: imageAnchor, anchorEntity: anchorEntity, locationAnchorEntity: locationAnchorEntity)
+                }
+            }
+        }
+    }
+}
+
+public struct MiradorViewContainer: UIViewRepresentable {
+    var locationAnchor: LocationAnchor
+    
+    public init(locationAnchor: LocationAnchor) {
+        self.locationAnchor = locationAnchor
+    }
+    
+    public func makeUIView(context: Context) -> MiradorView {
+        let arView = MiradorView(locationAnchor: self.locationAnchor)
 
         return arView
     }
 
-    func updateUIView(_ uiView: MiradorView, context: Context) {}
+    public func updateUIView(_ uiView: MiradorView, context: Context) {}
 }

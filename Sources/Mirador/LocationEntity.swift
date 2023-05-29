@@ -8,10 +8,10 @@
 import Foundation
 import RealityKit
 
-class LocationEntity: Entity {
-    var location: Location
+public class LocationEntity: Entity {
+    public var location: Location
     
-    init(location: Location) {
+    public init(location: Location) {
         self.location = location
         
         super.init()
@@ -22,12 +22,12 @@ class LocationEntity: Entity {
     }
 }
 
-class LocationAnchorEntity: Entity {
-    let locationAnchor: LocationAnchor
-    var referenceImageName: String?
+public class LocationAnchorEntity: Entity {
+    public let locationAnchor: LocationAnchor
+    public var referenceImageName: String?
     var kalmanFilter: KalmanFilter?
     
-    init(locationAnchor: LocationAnchor, referenceImageName: String? = nil) {
+    public init(locationAnchor: LocationAnchor, referenceImageName: String? = nil) {
         self.locationAnchor = locationAnchor
         self.referenceImageName = referenceImageName
         

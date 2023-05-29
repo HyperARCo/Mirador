@@ -28,7 +28,7 @@ struct GeoJSONData: Codable {
 }
 
 extension LocationAnchor {
-    static func anchorFromJSONData(jsonData: Data) -> LocationAnchor? {
+    public static func anchorFromJSONData(jsonData: Data) -> LocationAnchor? {
         let decoder = JSONDecoder()
 
         do {
@@ -52,7 +52,7 @@ extension LocationAnchor {
         }
     }
     
-    static func anchorFromFile(atPath path: String) -> LocationAnchor? {
+    public static func anchorFromFile(atPath path: String) -> LocationAnchor? {
         guard let jsonData = readDataFromFile(atPath: path) else {
             return nil
         }

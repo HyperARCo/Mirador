@@ -7,30 +7,30 @@
 
 import Foundation
 
-class PointOfInterest {
+public class PointOfInterest {
     let name: String
     let location: Location
     
-    init(name: String, location: Location) {
+    public init(name: String, location: Location) {
         self.name = name
         self.location = location
     }
 }
 
-enum AnchorOrientation: String, Codable {
+public enum AnchorOrientation: String, Codable {
     case horizontal = "horizontal"
     case vertical = "vertical"
 }
 
-class LocationAnchor {
-    let name: String
-    let physicalWidth: Double
-    let location: Location
-    let bearing: Float
-    var pointsOfInterest = [PointOfInterest]()
-    let orientation: AnchorOrientation
+public class LocationAnchor {
+    public let name: String
+    public let physicalWidth: Double
+    public let location: Location
+    public let bearing: Float
+    public var pointsOfInterest = [PointOfInterest]()
+    public let orientation: AnchorOrientation
     
-    init(name: String, physicalWidth: Double, location: Location, bearing: Float, orientation: AnchorOrientation) {
+    public init(name: String, physicalWidth: Double, location: Location, bearing: Float, orientation: AnchorOrientation) {
         self.name = name
         self.physicalWidth = physicalWidth
         self.location = location
