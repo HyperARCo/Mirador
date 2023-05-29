@@ -133,7 +133,7 @@ public class MiradorView: UIView {
         fatalError("init(coder:) has not been implemented")
     }
     
-    func setupRealityKitPlane(with image: UIImage, spokeHeight: Float = 60, cornerRadius: Float) -> Entity {
+    func setupRealityKitPlane(with image: UIImage, spokeAdditionalHeight: Float = 0, cornerRadius: Float) -> Entity {
         let opaque = image.opaque(color: UIColor(white: 0.5, alpha: 1.0))!
         
         let textureResource = try! TextureResource.generate(
@@ -160,6 +160,7 @@ public class MiradorView: UIView {
         let rotationAngle = Float.pi / 2
         model.transform.rotation = simd_quatf(angle: rotationAngle, axis: [1, 0, 0])
         
+        let spokeHeight: Float = 60
         model.position.y += spokeHeight + Float(image.size.height * 0.5)
         
         let parentEntity = Entity()
@@ -170,14 +171,14 @@ public class MiradorView: UIView {
         let circleEntity = ModelEntity(mesh: circle, materials: [whiteMaterial])
         circleEntity.transform.rotation = simd_quatf(angle: rotationAngle, axis: [1, 0, 0])
         
-        let actualHeight = spokeHeight + Float(image.size.height * 0.25)
+        let actualHeight = spokeHeight + spokeAdditionalHeight
         
-        let scope = MeshResource.generatePlane(width: 2, depth: actualHeight)
-        let scopeEntity = ModelEntity(mesh: scope, materials: [whiteMaterial])
-        scopeEntity.transform.rotation = simd_quatf(angle: rotationAngle, axis: [1, 0, 0])
-        scopeEntity.position.y += (actualHeight * 0.5)
+        let spoke = MeshResource.generatePlane(width: 2, depth: actualHeight)
+        let spokeEntity = ModelEntity(mesh: spoke, materials: [whiteMaterial])
+        spokeEntity.transform.rotation = simd_quatf(angle: rotationAngle, axis: [1, 0, 0])
+        spokeEntity.position.y += (actualHeight * 0.5)
         parentEntity.addChild(circleEntity)
-        parentEntity.addChild(scopeEntity)
+        parentEntity.addChild(spokeEntity)
         
         parentEntity.transform.rotation = simd_quatf(angle: Float.pi, axis: [0, 1, 0])
         
@@ -193,6 +194,10 @@ public class MiradorView: UIView {
         let shadowRadius: CGFloat = 4
         let shadowOffset = CGSize(width: 0, height: 2)
         
+        let padding = CGSize(
+            width: (shadowRadius * 2) + abs(shadowOffset.width),
+            height: (shadowRadius * 2) + abs(shadowOffset.height))
+        
         let renderer = ImageRenderer(
             content: Text(poi.name)
                 .font(Font.system(size: 14, weight: .semibold))
@@ -203,8 +208,8 @@ public class MiradorView: UIView {
                         .fill(Color.white)
                         .shadow(color: Color.black.opacity(0.2), radius: shadowRadius, x: shadowOffset.width, y: shadowOffset.height)
                 )
-                .padding([.leading, .trailing], (shadowRadius * 2) + abs(shadowOffset.width))
-                .padding([.top, .bottom], (shadowRadius * 2) + abs(shadowOffset.height))
+                .padding([.leading, .trailing], padding.width)
+                .padding([.top, .bottom], padding.height)
         )
         
         renderer.isOpaque = false
@@ -214,7 +219,7 @@ public class MiradorView: UIView {
         
         let entity = setupRealityKitPlane(
             with: image,
-            spokeHeight: spokeHeight,
+            spokeAdditionalHeight: spokeAdditionalHeight,
             cornerRadius: Float(image.size.height * 0.5))
 
         let screenScaleEntity = ScreenScaleEntity()
