@@ -1,15 +1,13 @@
-# Mirador
 <p align="center">
-<img src="banner.jpg" alt="Mirador" title="Mirador" width="600"/>
+<img src="banner.jpg" alt="Mirador" title="Mirador"/>
 </p>
 </br>
+
 **Mirador makes it easy to build impressive point-of-interest AR experiences on top of Apple’s new AR platform, RealityKit.**
 
 </br>
-<img src="demo.gif" alt="Mirador demo" title="Mirador demo" width="200"/>
+<img src="demo.gif" alt="Mirador demo" title="Mirador demo" width="300"/>
 </br>
-</p>
-
 
 Mirador is built by [Andrew Hart](https://twitter.com/andrewhartar), who pioneered AR navigation and built the largest open-source project for Apple’s first AR platform, ARKit. Andrew is now founder of [Hyper](https://HyperAR.com), bringing the same technology to retail stores.
 
@@ -21,8 +19,6 @@ Here's the problem: RealityKit, and AR in general, is location-agnostic. It trac
 Adding to this challenge, the GPS and compass in phones is also infamously bad - everyone knows the experience of walking in the wrong direction down a busy street because your phone didn’t know where you were or which direction you were facing. Imagine trying to higlight points of interest in AR, while the location is off by 10m and the device heading is off by 90º.
 
 Mirador solves all of this. It uses a visual anchor to understand the device location, and then takes care of displaying AR elements in the right place.
-
-
 
 ## How it works
 Mirador uses a visual anchor, provided by the developer, to understand the user’s location. At most viewpoints, there are informational boards, or other landmarks that can be used as visual anchors. It builds on RealityKit’s existing ImageAnchor system, for recognising 2D images.
@@ -167,11 +163,10 @@ The sample project provides a straightforward implementation which works at *Pri
 Note: In both cases, the `greenwich` anchor in the sample project is set to horizontal. You can change this to `vertical` if you’re displaying it on your screen. If you’re in Greenwich and trying it in-person, it’ll be horizontal on the ground.
 
 ## Known Issues
-PRs welcome to improve any of these
 - Each frame where the anchor is visible, RealityKit updates its position. Sometimes the image can only be seen on the edge of a frame, so RealityKit's update to its position is not as precise, but there's no way to know which are *good* anchor updates. And you can imagine the anchored content can jitter around every time it updates the position of the anchor. So I've implemented a Kalman filter on these position updates, which basically averages out the data and should arrive at the correct heading.
 
 ## Next steps
-This is v1. There are endless opportunities to take Mirador further. If you have suggestions or even want to add your own features, please DM me on Twitter, or do a PR.
+This is v1. There are endless opportunities to take Mirador further. Feel free to fork, and submit PRs with improvements and new features.
 
 ## Credit
 
