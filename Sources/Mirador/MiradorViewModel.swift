@@ -15,11 +15,14 @@ class MiradorViewModel: NSObject {
     var subscriptions = [Cancellable]()
     var screenScaleEntities = [ScreenScaleEntity]()
     var faceCameraEntities = [FaceCameraEntity]()
-    var locationAnchorEntities = [LocationAnchorEntity]()
+    var locationAnchorEntity: LocationAnchorEntity
     var imageAnchorEntities = [ARImageAnchor: AnchorEntity]()
     
     init(locationAnchor: LocationAnchor) {
         self.locationAnchor = locationAnchor
+        self.locationAnchorEntity = LocationAnchorEntity(
+            locationAnchor: locationAnchor,
+            referenceImageName: locationAnchor.name)
         
         super.init()
     }

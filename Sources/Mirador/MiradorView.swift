@@ -38,11 +38,9 @@ public class MiradorView: UIView {
             referenceImage.name = anchor.name
             configuration.detectionImages?.insert(referenceImage)
 
-            let locationAnchorEntity = LocationAnchorEntity(locationAnchor: anchor, referenceImageName: anchor.name)
-            model.locationAnchorEntities.append(locationAnchorEntity)
 
             for poi in anchor.pointsOfInterest {
-                addPOILabel(poi: poi, anchorEntity: locationAnchorEntity)
+                addPOILabel(poi: poi)
             }
         }
         
@@ -90,43 +88,41 @@ public class MiradorView: UIView {
             for entity in self.model.faceCameraEntities {
                 entity.look(at: self.arView.cameraTransform.translation, from: entity.position(relativeTo: nil), relativeTo: nil)
             }
-
-            for entity in self.model.locationAnchorEntities {
-                let childLocationEntities = entity.children.filter({$0 is LocationEntity}) as! [LocationEntity]
+            
+            let childLocationEntities = self.model.locationAnchorEntity.children.filter({$0 is LocationEntity}) as! [LocationEntity]
+            
+            for locationEntity in childLocationEntities {
+                var relativePoint = self.model.locationAnchor.location.coordinate.relativePoint(of: locationEntity.location.coordinate)
+                let distance = CGPoint.zero.distance(to: relativePoint)
+                let bearing = CGPoint.zero.bearing(to: relativePoint)
                 
-                for locationEntity in childLocationEntities {
-                    var relativePoint = entity.locationAnchor.location.coordinate.relativePoint(of: locationEntity.location.coordinate)
-                    let distance = CGPoint.zero.distance(to: relativePoint)
-                    let bearing = CGPoint.zero.bearing(to: relativePoint)
+                var y = Float(locationEntity.location.altitude - self.model.locationAnchor.location.altitude)
+                
+                //Elements further than 1000m don't render within RealityKit
+                //So, to be safe, anything with a distance further than 250m, we squash the distance to be within 250-500m
+                //We may want to limit this to content which has scale applied
+                
+                // Check if the distance is greater than 250m
+                if distance > 250 {
+                    // Define a scaling factor that maps the distance to the range [250, 500]
+                    let maxScaledDistance: CGFloat = 500
+                    let minScaledDistance: CGFloat = 250
+                    let scaleFactor: CGFloat = (maxScaledDistance - minScaledDistance) / log10(distance - minScaledDistance + 1)
                     
-                    var y = Float(locationEntity.location.altitude - entity.locationAnchor.location.altitude)
-
-                    //Elements further than 1000m don't render within RealityKit
-                    //So, to be safe, anything with a distance further than 250m, we squash the distance to be within 250-500m
-                    //We may want to limit this to content which has scale applied
-
-                    // Check if the distance is greater than 250m
-                    if distance > 250 {
-                        // Define a scaling factor that maps the distance to the range [250, 500]
-                        let maxScaledDistance: CGFloat = 500
-                        let minScaledDistance: CGFloat = 250
-                        let scaleFactor: CGFloat = (maxScaledDistance - minScaledDistance) / log10(distance - minScaledDistance + 1)
-
-                        // Calculate the squashed distance
-                        let squashedDistance = minScaledDistance + log10(distance - minScaledDistance + 1) * scaleFactor
-
-                        // Calculate the new relative point using the squashed distance and bearing
-                        relativePoint = CGPoint.zero.destination(bearing: bearing, distance: squashedDistance)
-                        
-                        let squashFactor = squashedDistance / distance
-                        y *= Float(squashFactor)
-                    }
-
-                    locationEntity.position = [
-                        Float(relativePoint.x),
-                        y,
-                        Float(-relativePoint.y)]
+                    // Calculate the squashed distance
+                    let squashedDistance = minScaledDistance + log10(distance - minScaledDistance + 1) * scaleFactor
+                    
+                    // Calculate the new relative point using the squashed distance and bearing
+                    relativePoint = CGPoint.zero.destination(bearing: bearing, distance: squashedDistance)
+                    
+                    let squashFactor = squashedDistance / distance
+                    y *= Float(squashFactor)
                 }
+                
+                locationEntity.position = [
+                    Float(relativePoint.x),
+                    y,
+                    Float(-relativePoint.y)]
             }
         }
 
@@ -191,7 +187,7 @@ public class MiradorView: UIView {
         return containerEntity
     }
     
-    func addPOILabel(poi: PointOfInterest, spokeHeight: Float = 60, anchorEntity: LocationAnchorEntity) {
+    func addPOILabel(poi: PointOfInterest, spokeHeight: Float = 60) {
         let cornerRadius: CGFloat = 53
         
         let shadowRadius: CGFloat = 4
@@ -234,31 +230,31 @@ public class MiradorView: UIView {
         anchorEntity.addChild(locationEntity)
     }
     
-    func updateOrientation(imageAnchor: ARImageAnchor, anchorEntity: AnchorEntity, locationAnchorEntity: LocationAnchorEntity) {
+    func updateOrientation(imageAnchor: ARImageAnchor, anchorEntity: AnchorEntity) {
         anchorEntity.setTransformMatrix(imageAnchor.transform, relativeTo: nil)
         
         let angle: Float
         
-        if locationAnchorEntity.locationAnchor.orientation == .horizontal {
-            angle = imageAnchor.transform.eulerAngles.y + locationAnchorEntity.locationAnchor.bearing
-            locationAnchorEntity.setOrientation(simd_quatf(angle: angle, axis: [0,1,0]), relativeTo: nil)
+        if model.locationAnchorEntity.locationAnchor.orientation == .horizontal {
+            angle = imageAnchor.transform.eulerAngles.y + model.locationAnchorEntity.locationAnchor.bearing
+            model.locationAnchorEntity.setOrientation(simd_quatf(angle: angle, axis: [0,1,0]), relativeTo: nil)
         } else {
             let rotationMatrix = simd_float4x4(SCNMatrix4MakeRotation(Float(-90).degreesToRadians, 1, 0, 0))
             let transform = imageAnchor.transform * rotationMatrix
             
-            angle = transform.eulerAngles.y + locationAnchorEntity.locationAnchor.bearing
+            angle = transform.eulerAngles.y + model.locationAnchorEntity.locationAnchor.bearing
         }
         
-        if let kalmanFilter = locationAnchorEntity.kalmanFilter {
+        if let kalmanFilter = model.locationAnchorEntity.kalmanFilter {
             kalmanFilter.update(measurement: angle, measurementUncertainty: Float(1).degreesToRadians)
         } else {
             let kalmanFilter = KalmanFilter(initialEstimate: angle, initialUncertainty:  Float(1).degreesToRadians)
-            locationAnchorEntity.kalmanFilter = kalmanFilter
+            model.locationAnchorEntity.kalmanFilter = kalmanFilter
         }
         
-        guard let angleEstimate = locationAnchorEntity.kalmanFilter?.getEstimate() else { return }
+        guard let angleEstimate = model.locationAnchorEntity.kalmanFilter?.getEstimate() else { return }
        
-        locationAnchorEntity.setOrientation(simd_quatf(angle: angleEstimate, axis: [0,1,0]), relativeTo: nil)
+        model.locationAnchorEntity.setOrientation(simd_quatf(angle: angleEstimate, axis: [0,1,0]), relativeTo: nil)
     }
 }
 
@@ -278,10 +274,10 @@ extension MiradorView: ARSessionDelegate {
                 
                 let referenceImageName = imageAnchor.referenceImage.name
                 
-                if let locationAnchorEntity = model.locationAnchorEntities.first(where: {$0.referenceImageName == referenceImageName}) {
-                    anchorEntity.addChild(locationAnchorEntity)
+                if let anchorReferenceImageName = model.locationAnchorEntity.referenceImageName, anchorReferenceImageName == referenceImageName {
+                    anchorEntity.addChild(model.locationAnchorEntity)
                     
-                    updateOrientation(imageAnchor: imageAnchor, anchorEntity: anchorEntity, locationAnchorEntity: locationAnchorEntity)
+                    updateOrientation(imageAnchor: imageAnchor, anchorEntity: anchorEntity)
                 }
             }
         }
@@ -290,9 +286,8 @@ extension MiradorView: ARSessionDelegate {
     public func session(_ session: ARSession, didUpdate anchors: [ARAnchor]) {
         for anchor in anchors {
             if let imageAnchor = anchor as? ARImageAnchor {
-                if let anchorEntity = model.imageAnchorEntities[imageAnchor],
-                   let locationAnchorEntity = anchorEntity.children.first(where: {$0 is LocationAnchorEntity}) as? LocationAnchorEntity {
-                    updateOrientation(imageAnchor: imageAnchor, anchorEntity: anchorEntity, locationAnchorEntity: locationAnchorEntity)
+                if let anchorEntity = model.imageAnchorEntities[imageAnchor] {
+                    updateOrientation(imageAnchor: imageAnchor, anchorEntity: anchorEntity)
                 }
             }
         }
