@@ -225,13 +225,30 @@ public class MiradorView: UIView {
         renderer.isOpaque = false
         renderer.scale = UIScreen.main.scale
         
-        let image = renderer.uiImage!
+        guard let image = renderer.uiImage else { return }
         
+        addPOIImage(location: poi.location, image: image, spokeAdditionalHeight: Float(padding.height))
+    }
+    
+    ///Adds a POI element displaying an image. Image will appear at screen-scale, at the size given.
+    ///e.g. if the image is 60x60, it'll appear at 60x60 points on-sreen.
+    ///The image will face the camera and be anchored to the given location.
+    ///This supports transparency, dropshadows etc., and displays the image without any special lighting effects.
+    ///- Parameters:
+    ///    - spokeAdditionalHeight: The spoke is the stem that reaches up from the point of interest to the given image, ending at the bottom of the image. If the bottom of the image is transparent, to allow for a visible shadow, this should specify the extra bottom padding.
+    public func addPOIImage(location: Location, image: UIImage, spokeAdditionalHeight: Float = 0) {
         let entity = setupRealityKitPlane(
             with: image,
             spokeAdditionalHeight: spokeAdditionalHeight,
             cornerRadius: Float(image.size.height * 0.5))
 
+        addPOIEntity(location: location, entity: entity)
+    }
+    
+    ///Adds a POI entity, which will appear at screen-scale at the size given.
+    ///e.g. if the entity is 40m wide, it'll appear as 40 points on-screen.
+    ///The entity will face the camera and be anchored to the given location.
+    public func addPOIEntity(location: Location, entity: Entity) {
         let screenScaleEntity = ScreenScaleEntity()
         screenScaleEntity.addChild(entity)
         model.screenScaleEntities.append(screenScaleEntity)
@@ -240,9 +257,15 @@ public class MiradorView: UIView {
         faceCameraEntity.addChild(screenScaleEntity)
         model.faceCameraEntities.append(faceCameraEntity)
         
-        let locationEntity = LocationEntity(location: poi.location)
-        locationEntity.addChild(faceCameraEntity)
-        anchorEntity.addChild(locationEntity)
+        addLocationEntity(location: location, entity: faceCameraEntity)
+    }
+    
+    ///Adds an entity anchored to the given location. This does not come with screen scale or facing the camera - use `addPOIEntity` for that functionality.
+    public func addLocationEntity(location: Location, entity: Entity) {
+        let locationEntity = LocationEntity(location: location)
+        locationEntity.addChild(entity)
+        
+        model.locationAnchorEntity.addChild(locationEntity)
     }
     
     func updateOrientation(imageAnchor: ARImageAnchor, anchorEntity: AnchorEntity) {
