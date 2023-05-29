@@ -15,36 +15,29 @@ public class MiradorView: UIView {
     
     let arView = ARView()
     
+    private var detectionImages = Set<ARReferenceImage>()
+    
     public init(locationAnchor: LocationAnchor) {
         self.model = MiradorViewModel(locationAnchor: locationAnchor)
         
         super.init(frame: .zero)
         
-        let configuration = ARWorldTrackingConfiguration()
-        configuration.planeDetection = [.horizontal, .vertical]
-        configuration.detectionImages = []
-        configuration.maximumNumberOfTrackedImages = 1
-        
         arView.renderOptions = [.disableHDR]
         arView.session.delegate = self
-        addSubview(arView)
         arView.autoresizingMask = [.flexibleHeight, .flexibleWidth]
-        arView.backgroundColor = .purple
+        addSubview(arView)
         
         if let anchor = model.locationAnchor,
            let image = UIImage(named: anchor.name),
            let cgImage = image.cgImage {
             let referenceImage = ARReferenceImage(cgImage, orientation: .up, physicalWidth: anchor.physicalWidth)
             referenceImage.name = anchor.name
-            configuration.detectionImages?.insert(referenceImage)
-
+            detectionImages.insert(referenceImage)
 
             for poi in anchor.pointsOfInterest {
                 addPOILabel(poi: poi)
             }
         }
-        
-        arView.session.run(configuration)
         
         let baseAnchor = AnchorEntity(world: [0,0,0])
         arView.scene.addAnchor(baseAnchor)
@@ -131,6 +124,23 @@ public class MiradorView: UIView {
     
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
+    }
+    
+    ///Call when the app is active and in the foreground
+    public func run() {
+        let configuration = ARWorldTrackingConfiguration()
+        configuration.planeDetection = [.horizontal, .vertical]
+        configuration.detectionImages = detectionImages
+        configuration.maximumNumberOfTrackedImages = 1
+        
+        arView.session.run(configuration)
+    }
+    
+    ///Call when the app leaves the foreground
+    public func pause() {
+        arView.session.pause()
+        
+        model.locationAnchorEntity.kalmanFilter = nil
     }
     
     func setupRealityKitPlane(with image: UIImage, spokeAdditionalHeight: Float = 0, cornerRadius: Float) -> Entity {
