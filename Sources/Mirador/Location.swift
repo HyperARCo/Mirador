@@ -92,7 +92,7 @@ extension Coordinate {
         
         let φ2 = asin(sin(φ1) * cos(d/R) + cos(φ1) * sin(d/R) * cos(h))
         let λ2 = λ1 + atan2(sin(h) * sin(d/R) * cos(φ1),
-                              cos(d/R) - sin(φ1) * sin(φ2));
+                            cos(d/R) - sin(φ1) * sin(φ2))
         
         return Coordinate(latitude: φ2.radiansToDegrees, longitude: λ2.radiansToDegrees)
     }
@@ -110,9 +110,7 @@ extension Coordinate {
 
 extension CGPoint {
     func bearing(to point: CGPoint) -> CGFloat {
-        let bearing = atan2(point.x - self.x, point.y - self.y)
-        
-        return bearing
+        return atan2(point.x - self.x, point.y - self.y)
     }
     
     func distance(to point: CGPoint) -> CGFloat {
