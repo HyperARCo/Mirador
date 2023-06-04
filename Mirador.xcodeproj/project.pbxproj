@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		17F177782A2D08DE00E91DDA /* MiradorTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 17F177772A2D08DE00E91DDA /* MiradorTests.swift */; };
 		49585F432A240580009C99E7 /* Location.swift in Sources */ = {isa = PBXBuildFile; fileRef = 49585F392A240580009C99E7 /* Location.swift */; };
 		49585F442A240580009C99E7 /* LocationAnchor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 49585F3A2A240580009C99E7 /* LocationAnchor.swift */; };
 		49585F452A240580009C99E7 /* Entities.swift in Sources */ = {isa = PBXBuildFile; fileRef = 49585F3B2A240580009C99E7 /* Entities.swift */; };
@@ -24,7 +25,19 @@
 		49FFC9AF2A1C2CFB006AD4E1 /* greenwich.json in Resources */ = {isa = PBXBuildFile; fileRef = 49FFC9AE2A1C2CFB006AD4E1 /* greenwich.json */; };
 /* End PBXBuildFile section */
 
+/* Begin PBXContainerItemProxy section */
+		17F177792A2D08DE00E91DDA /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 49B96D9C2A1A339900AF303A /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 49B96DA32A1A339900AF303A;
+			remoteInfo = Mirador;
+		};
+/* End PBXContainerItemProxy section */
+
 /* Begin PBXFileReference section */
+		17F177752A2D08DE00E91DDA /* MiradorTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = MiradorTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
+		17F177772A2D08DE00E91DDA /* MiradorTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MiradorTests.swift; sourceTree = "<group>"; };
 		49585F392A240580009C99E7 /* Location.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Location.swift; sourceTree = "<group>"; };
 		49585F3A2A240580009C99E7 /* LocationAnchor.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LocationAnchor.swift; sourceTree = "<group>"; };
 		49585F3B2A240580009C99E7 /* Entities.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Entities.swift; sourceTree = "<group>"; };
@@ -44,6 +57,13 @@
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
+		17F177722A2D08DE00E91DDA /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		49B96DA12A1A339900AF303A /* Frameworks */ = {
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
@@ -54,6 +74,14 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		17F177762A2D08DE00E91DDA /* MiradorTests */ = {
+			isa = PBXGroup;
+			children = (
+				17F177772A2D08DE00E91DDA /* MiradorTests.swift */,
+			);
+			path = MiradorTests;
+			sourceTree = "<group>";
+		};
 		49585F382A240580009C99E7 /* Mirador */ = {
 			isa = PBXGroup;
 			children = (
@@ -76,6 +104,7 @@
 			children = (
 				49FFC9BC2A23AB6F006AD4E1 /* Sources */,
 				49B96DA62A1A339900AF303A /* Demo */,
+				17F177762A2D08DE00E91DDA /* MiradorTests */,
 				49B96DA52A1A339900AF303A /* Products */,
 			);
 			sourceTree = "<group>";
@@ -84,6 +113,7 @@
 			isa = PBXGroup;
 			children = (
 				49B96DA42A1A339900AF303A /* Mirador.app */,
+				17F177752A2D08DE00E91DDA /* MiradorTests.xctest */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -119,6 +149,24 @@
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
+		17F177742A2D08DE00E91DDA /* MiradorTests */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 17F1777D2A2D08DE00E91DDA /* Build configuration list for PBXNativeTarget "MiradorTests" */;
+			buildPhases = (
+				17F177712A2D08DE00E91DDA /* Sources */,
+				17F177722A2D08DE00E91DDA /* Frameworks */,
+				17F177732A2D08DE00E91DDA /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				17F1777A2A2D08DE00E91DDA /* PBXTargetDependency */,
+			);
+			name = MiradorTests;
+			productName = MiradorTests;
+			productReference = 17F177752A2D08DE00E91DDA /* MiradorTests.xctest */;
+			productType = "com.apple.product-type.bundle.unit-test";
+		};
 		49B96DA32A1A339900AF303A /* Mirador */ = {
 			isa = PBXNativeTarget;
 			buildConfigurationList = 49B96DB22A1A339A00AF303A /* Build configuration list for PBXNativeTarget "Mirador" */;
@@ -146,6 +194,10 @@
 				LastSwiftUpdateCheck = 1430;
 				LastUpgradeCheck = 1430;
 				TargetAttributes = {
+					17F177742A2D08DE00E91DDA = {
+						CreatedOnToolsVersion = 14.3;
+						TestTargetID = 49B96DA32A1A339900AF303A;
+					};
 					49B96DA32A1A339900AF303A = {
 						CreatedOnToolsVersion = 14.3;
 					};
@@ -165,11 +217,19 @@
 			projectRoot = "";
 			targets = (
 				49B96DA32A1A339900AF303A /* Mirador */,
+				17F177742A2D08DE00E91DDA /* MiradorTests */,
 			);
 		};
 /* End PBXProject section */
 
 /* Begin PBXResourcesBuildPhase section */
+		17F177732A2D08DE00E91DDA /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		49B96DA22A1A339900AF303A /* Resources */ = {
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
@@ -183,6 +243,14 @@
 /* End PBXResourcesBuildPhase section */
 
 /* Begin PBXSourcesBuildPhase section */
+		17F177712A2D08DE00E91DDA /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				17F177782A2D08DE00E91DDA /* MiradorTests.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		49B96DA02A1A339900AF303A /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
@@ -204,7 +272,49 @@
 		};
 /* End PBXSourcesBuildPhase section */
 
+/* Begin PBXTargetDependency section */
+		17F1777A2A2D08DE00E91DDA /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = 49B96DA32A1A339900AF303A /* Mirador */;
+			targetProxy = 17F177792A2D08DE00E91DDA /* PBXContainerItemProxy */;
+		};
+/* End PBXTargetDependency section */
+
 /* Begin XCBuildConfiguration section */
+		17F1777B2A2D08DE00E91DDA /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				BUNDLE_LOADER = "$(TEST_HOST)";
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				GENERATE_INFOPLIST_FILE = YES;
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = Hyper.Mirador.MiradorTests;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_EMIT_LOC_STRINGS = NO;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/Mirador.app/$(BUNDLE_EXECUTABLE_FOLDER_PATH)/Mirador";
+			};
+			name = Debug;
+		};
+		17F1777C2A2D08DE00E91DDA /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				BUNDLE_LOADER = "$(TEST_HOST)";
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				GENERATE_INFOPLIST_FILE = YES;
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = Hyper.Mirador.MiradorTests;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_EMIT_LOC_STRINGS = NO;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/Mirador.app/$(BUNDLE_EXECUTABLE_FOLDER_PATH)/Mirador";
+			};
+			name = Release;
+		};
 		49B96DB02A1A339A00AF303A /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
@@ -382,6 +492,15 @@
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
+		17F1777D2A2D08DE00E91DDA /* Build configuration list for PBXNativeTarget "MiradorTests" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				17F1777B2A2D08DE00E91DDA /* Debug */,
+				17F1777C2A2D08DE00E91DDA /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
 		49B96D9F2A1A339900AF303A /* Build configuration list for PBXProject "Mirador" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
