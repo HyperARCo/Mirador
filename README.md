@@ -16,7 +16,7 @@ There are many use-cases for highlighting points of interest on a skyline in AR:
 
 Here's the problem: RealityKit, and AR in general, is location-agnostic. It tracks device motion in xyz, like a video game, but doesn’t hold the concept of GPS or real-world location.
 
-Adding to this challenge, the GPS and compass in phones is also infamously bad - everyone knows the experience of walking in the wrong direction down a busy street because your phone didn’t know where you were or which direction you were facing. Imagine trying to higlight points of interest in AR, while the location is off by 10m and the device heading is off by 90º.
+Adding to this challenge, the GPS and compass in phones is also infamously bad - everyone knows the experience of walking in the wrong direction down a busy street because your phone didn’t know where you were or which direction you were facing. Imagine trying to highlight points of interest in AR, while the location is off by 10m and the device heading is off by 90º.
 
 Mirador solves all of this. It uses a visual anchor to understand the device location, and then takes care of displaying AR elements in the right place.
 
@@ -61,7 +61,7 @@ miradorView.run()
 
 
 ## Setup POIs with JSON
-Once you have more than a few points of interest, writing all of this out can be combersome. Mirador also supports setting up the whole experience from a JSON file. Here’s the JSON file you’ll need for the same experience:
+Once you have more than a few points of interest, writing all of this out can be cumbersome. Mirador also supports setting up the whole experience from a JSON file. Here’s the JSON file you’ll need for the same experience:
 ```
 {
     "anchor": {
@@ -104,7 +104,7 @@ Add a clear image of the anchor to your Assets, with the same name specified in 
 Try and take the image face-on, without any shadows or harsh reflections. Perspective transforming the image to be perfect doesn't work - in my testing, RealityKit doesn't recognise images that have been skewed. An image *designed to be an anchor* (such as a QR code) could work best, and could also be seen as a good marketing opportunity, e.g. an image which promotes the app, and is also the anchor.
 
 ## Final setup steps
-If you’re using SwiftUI, you can instantiate in mostly the same way, but using `MiradorViewContainer(locationAnchor: locationAnchor)`.
+If you’re using SwiftUI, you can instantiate in mostly the same way, by using `MiradorViewContainer(locationAnchor: locationAnchor)`.
 
 Call `miradorView.run()` when the experience is launched or brought back to the foreground, and `miradorView.pause()` when the app is in the background.
 
